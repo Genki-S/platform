@@ -1,0 +1,25 @@
+server {
+    listen       80;
+    server_name  localhost;
+
+    location / {
+        proxy_pass SED_PORTFOLIO_URL;
+    }
+
+    location /blog {
+        # not rewriting -- it's served under /blog for now
+        # TODO: serve under root while keeping WordPress configuration (home and site_url)
+        # rewrite ^/blog(/.*)$ $1 break;
+        proxy_pass SED_BLOG_URL;
+    }
+
+    location /jp/journal/ {
+        rewrite ^/jp/journal(/.*)$ $1 break;
+        proxy_pass SED_JPJOURNAL_URL;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

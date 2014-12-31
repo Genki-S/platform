@@ -20,3 +20,8 @@ ExecStart=/usr/bin/docker run \
   --name rproxy \
   nginx /script/start.sh
 ExecStop=/usr/bin/docker stop rproxy
+
+[X-Fleet]
+MachineOf=portfolio.service
+MachineOf=blog.service
+MachineOf=jp.service

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+root="$(dirname $0)/.."
+rsync -arv \
+  --exclude-from "${HOME}/.gitignore_global" \
+  "${root}/containers/" genkisugimoto.com:/home/core

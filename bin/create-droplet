@@ -1,0 +1,22 @@
+#!/bin/bash
+
+root="$(dirname $0)/.."
+cloud_config=$(cat ${root}/cloud-config.yml \
+  | sed "s/__SED_DISCOVERY_TOKEN__/${DISCOVERY_TOKEN}/")
+
+data=$(cat << EOF
+{
+  "ssh_keys": ["${SSH_KEY_ID}"],
+  "name": "genkisugimoto",
+  "region": "nyc3",
+  "size": "512mb",
+  "private_networking": true,
+  "image": "coreos-stable"
+EOF)
+data=$(echo ${data} | tr -d " \n")
+data="${data},\"user_data\":\"${cloud_config}\"}"
+
+curl -X POST "https://api.digitalocean.com/v2/droplets" \
+      -d "${data}" \
+      -H "Authorization: Bearer $TOKEN" \
+      -H "Content-Type: application/json"

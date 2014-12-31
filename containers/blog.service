@@ -1,0 +1,13 @@
+[Unit]
+Description=English tech blog
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill blog
+ExecStartPre=-/usr/bin/docker rm blog
+ExecStartPre=/usr/bin/docker pull genki/wordpress
+ExecStart=/usr/bin/docker run \
+  --name blog \
+  genki/wordpress /start.sh
+ExecStop=/usr/bin/docker stop blog

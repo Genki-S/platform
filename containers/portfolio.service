@@ -1,0 +1,14 @@
+[Unit]
+Description=Portfolio site
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill portfolio
+ExecStartPre=-/usr/bin/docker rm portfolio
+ExecStartPre=/usr/bin/docker pull nginx
+ExecStart=/usr/bin/docker run \
+  -v /home/core/portfolio:/usr/share/nginx/html:ro \
+  --name portfolio \
+  nginx
+ExecStop=/usr/bin/docker stop portfolio

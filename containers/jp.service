@@ -1,0 +1,14 @@
+[Unit]
+Description=Japanese portfolio site
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill jp
+ExecStartPre=-/usr/bin/docker rm jp
+ExecStartPre=/usr/bin/docker pull nginx
+ExecStart=/usr/bin/docker run \
+  -v /home/core/jp:/usr/share/nginx/html:ro \
+  --name jp \
+  nginx
+ExecStop=/usr/bin/docker stop jp

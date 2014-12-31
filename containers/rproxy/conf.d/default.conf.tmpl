@@ -13,9 +13,10 @@ server {
         proxy_pass SED_BLOG_URL;
     }
 
-    location /jp/journal/ {
-        rewrite ^/jp/journal(/.*)$ $1 break;
-        proxy_pass SED_JPJOURNAL_URL;
+    location /jp {
+        rewrite ^/jp$ / break;
+        rewrite ^/jp(/.*)$ $1 break;
+        proxy_pass SED_JP_URL;
     }
 
     error_page   500 502 503 504  /50x.html;

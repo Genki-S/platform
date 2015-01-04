@@ -5,7 +5,7 @@ BindsTo=rproxy-etcd-amb.service
 
 [Service]
 EnvironmentFile=/etc/environment
-EnvironmentFile=/home/core/app/environment
+EnvironmentFile=/home/core/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStart=/usr/bin/docker run \

@@ -1,9 +1,16 @@
 # Platform
 
+## Prerequisites
+
+- All files under `container` must reside on all hosts' `/home/core` directories
+
 ## TODO
 
+- Get rid of prerequisites
 - Create entry point
   - Fixed IP or Dynamic DNS?
+- Recovery strategy
+  - [Dead container not restarted with Restart=always in Service · Issue #940 · coreos/fleet](https://github.com/coreos/fleet/issues/940)
 
 ## Architecture
 

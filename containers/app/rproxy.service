@@ -5,7 +5,7 @@ After=docker.service
 [Service]
 TimeoutStartSec=0
 EnvironmentFile=/etc/environment
-EnvironmentFile=/home/core/environment
+EnvironmentFile=/home/core/app/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull nginx
@@ -16,8 +16,8 @@ ExecStart=/usr/bin/docker run \
   -e "PORTFOLIO_PORT=${PORTFOLIO_PORT}" \
   -e "BLOG_PORT=${BLOG_PORT}" \
   -e "JP_PORT=${JP_PORT}" \
-  -v /home/core/rproxy/script:/script \
-  -v /home/core/rproxy/conf.d:/etc/nginx/conf.d \
+  -v /home/core/app/rproxy/script:/script \
+  -v /home/core/app/rproxy/conf.d:/etc/nginx/conf.d \
   --name %n \
   nginx /script/start.sh
 ExecStop=/usr/bin/docker stop %n

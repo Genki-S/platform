@@ -1,5 +1,5 @@
 [Unit]
-Description=Japanese portfolio site
+Description=My Portfolio
 After=docker.service
 
 [Service]
@@ -9,7 +9,7 @@ ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull nginx
 ExecStart=/usr/bin/docker run \
-  -v /home/core/jp:/usr/share/nginx/html:ro \
+  -v /home/core/app/portfolio:/usr/share/nginx/html:ro \
   -p ${COREOS_PRIVATE_IPV4}::80 \
   --name %n \
   nginx

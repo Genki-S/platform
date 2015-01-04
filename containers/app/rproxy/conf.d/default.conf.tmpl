@@ -10,6 +10,7 @@ server {
         # not rewriting -- it's served under /blog for now
         # TODO: serve under root while keeping WordPress configuration (home and site_url)
         # rewrite ^/blog(/.*)$ $1 break;
+        rewrite ^/blog /blog/ break;
         proxy_pass SED_BLOG_URL;
     }
 

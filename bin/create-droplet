@@ -1,22 +1,25 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 DROPLET_NAME"
+if [ $# -ne 2 ]; then
+  echo "Usage: $0 DROPLET_NAME SIZE(512mb, 1gb, 2gb)"
   exit 1
 fi
 
 name=$1
+size=$2
 
 root="$(dirname $0)/.."
 cloud_config=$(cat ${root}/cloud-config.yml \
-  | sed "s/__SED_DISCOVERY_TOKEN__/${DISCOVERY_TOKEN}/")
+  | sed "s/__SED_DISCOVERY_TOKEN__/${DISCOVERY_TOKEN}/" \
+  | sed "s/__SED_NAME__/${name}/" \
+  | sed "s/__SED_SIZE__/${size}/")
 
 data=$(cat << EOF
 {
   "ssh_keys": ["${SSH_KEY_ID}"],
   "name": "$name",
   "region": "nyc3",
-  "size": "512mb",
+  "size": "$size",
   "private_networking": true,
   "image": "coreos-stable"
 EOF)

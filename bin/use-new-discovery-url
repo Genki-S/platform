@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+set -e
+
+root="$(dirname $0)/.."
+discovery_url=$(curl https://discovery.etcd.io/new)
+token=${discovery_url##*/}
+sed -i.bk -e "s/DISCOVERY_TOKEN=.*/DISCOVERY_TOKEN=${token}/" ${root}/.envrc

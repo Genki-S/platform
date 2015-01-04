@@ -1,0 +1,19 @@
+#!/bin/bash
+
+root="$(dirname $0)/.."
+
+data=$(curl -X GET -H 'Content-Type: application/json' -H "Authorization: Bearer $TOKEN" 'https://api.digitalocean.com/v2/droplets')
+droplets=$(echo ${data} | jq '.droplets | map({name: .name, id: .id, ip: .networks.v4[1].ip_address})')
+length=$(echo ${droplets} | jq 'length')
+
+for i in $(seq 0 $(($length - 1))) ; do
+  droplet=$(echo ${droplets} | jq ".[$i]")
+  name=$(echo ${droplet} | jq -r '.name')
+  if [ $name == "Experiment" ]; then
+    continue
+  fi
+
+  ip=$(echo ${droplet} | jq -r '.ip')
+  echo "Deploying to ${name} (${ip}) ..."
+  ${root}/bin/deploy $name
+done

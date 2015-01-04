@@ -1,0 +1,24 @@
+[Unit]
+Description=GitLab
+After=docker.service
+After=gitlab-support-redis.service
+After=gitlab-support-postgresql.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+# TODO: Remove link to redis and postgresql, and use dynamic ambassodor
+ExecStart=/usr/bin/docker run \
+  --name %n \
+  -e 'GITLAB_PORT=10080' -e 'GITLAB_SSH_PORT=10022' \
+  --link gitlab-support-redis.service:redisio \
+  --link gitlab-support-postgresql.service:postgresql \
+  -p 10022:22 -p 10080:80 \
+  -v /home/core/intra/gitlab/data:/home/git/data \
+  --rm sameersbn/gitlab:7.6.2
+ExecStop=/usr/bin/docker stop %n
+
+[X-Fleet]
+MachineMetadata=name=gitlab-instance

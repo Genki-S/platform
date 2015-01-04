@@ -1,0 +1,16 @@
+[Unit]
+Description=Redis for GitLab
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --name %n \
+  sameersbn/redis:latest
+ExecStop=/usr/bin/docker stop %n
+
+[X-Fleet]
+MachineOf=gitlab.service

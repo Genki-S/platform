@@ -1,0 +1,19 @@
+[Unit]
+Description=Register
+After=gitlab.service
+BindsTo=gitlab.service
+After=gitlab-etcd-amb.service
+BindsTo=gitlab-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link gitlab-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  gitlab.service 80 intra/gitlab
+
+[X-Fleet]
+MachineOf=gitlab.service

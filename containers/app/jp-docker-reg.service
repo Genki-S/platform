@@ -1,5 +1,7 @@
 [Unit]
 Description=Register
+After=jp.service
+BindsTo=jp.service
 After=jp-etcd-amb.service
 BindsTo=jp-etcd-amb.service
 
@@ -14,4 +16,4 @@ ExecStart=/usr/bin/docker run \
   jp.service 80 jp
 
 [X-Fleet]
-MachineOf=jp-etcd-amb.service
+MachineOf=jp.service

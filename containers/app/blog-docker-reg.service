@@ -1,5 +1,7 @@
 [Unit]
 Description=Register
+After=blog.service
+BindsTo=blog.service
 After=blog-etcd-amb.service
 BindsTo=blog-etcd-amb.service
 
@@ -14,4 +16,4 @@ ExecStart=/usr/bin/docker run \
   blog.service 80 blog
 
 [X-Fleet]
-MachineOf=blog-etcd-amb.service
+MachineOf=blog.service

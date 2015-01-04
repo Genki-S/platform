@@ -1,23 +1,22 @@
 [Unit]
-Description=Rproxy
+Description=Entry point
 After=docker.service
 
 [Service]
 TimeoutStartSec=0
 EnvironmentFile=/etc/environment
-EnvironmentFile=/home/core/app/environment
+EnvironmentFile=/home/core/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull nginx
 # NOTE: docker container does not know about EnvironmentFile
 ExecStart=/usr/bin/docker run \
+  -p 80:80 \
   -e "COREOS_PRIVATE_IPV4=${COREOS_PRIVATE_IPV4}" \
-  -e "PORTFOLIO_PORT=${PORTFOLIO_PORT}" \
-  -e "BLOG_PORT=${BLOG_PORT}" \
-  -e "JP_PORT=${JP_PORT}" \
-  -v /home/core/app/rproxy/script:/script \
-  -v /home/core/app/rproxy/conf.d:/etc/nginx/conf.d \
-  -p ${COREOS_PRIVATE_IPV4}::80 \
+  -e "APP_PORT=${APP_PORT}" \
+  -e "INTRANET_PORT=${INTRANET_PORT}" \
+  -v /home/core/entry/script:/script \
+  -v /home/core/entry/conf.d:/etc/nginx/conf.d \
   --name %n \
   nginx /script/start.sh
 ExecStop=/usr/bin/docker stop %n

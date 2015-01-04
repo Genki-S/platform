@@ -9,5 +9,6 @@ host=$1
 
 root="$(dirname $0)/.."
 rsync -arv \
+  --exclude "${root}/containers/app/portfolio/node_modules" \
   --exclude-from "${HOME}/.gitignore_global" \
   "${root}/containers/" ${host}:/home/core

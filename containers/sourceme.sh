@@ -13,7 +13,11 @@ alias fcd="fleetctl destroy"
 alias fcj="fleetctl journal"
 alias fclu="fleetctl list-units"
 alias fcluf="fleetctl list-unit-files"
+alias fclm="fleetctl list-machines"
 alias fcssh="fleetctl ssh"
+alias fcl="fleetctl load"
+alias fcs="fleetctl submit"
+alias fcc="fleetctl cat"
 
 # Etcd aliases
 alias ec="etcdctl"

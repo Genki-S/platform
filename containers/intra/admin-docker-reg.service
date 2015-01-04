@@ -1,0 +1,19 @@
+[Unit]
+Description=Register
+After=admin.service
+BindsTo=admin.service
+After=admin-etcd-amb.service
+BindsTo=admin-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link admin-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  admin.service 80 intra/admin
+
+[X-Fleet]
+MachineOf=admin.service

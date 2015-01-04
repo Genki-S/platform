@@ -1,0 +1,19 @@
+[Unit]
+Description=Register
+After=intra-rproxy.service
+BindsTo=intra-rproxy.service
+After=intra-rproxy-etcd-amb.service
+BindsTo=intra-rproxy-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link intra-rproxy-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  intra-rproxy.service 80 intra/intra-rproxy
+
+[X-Fleet]
+MachineOf=intra-rproxy.service

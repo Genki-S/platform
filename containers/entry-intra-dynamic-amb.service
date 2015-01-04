@@ -1,0 +1,22 @@
+[Unit]
+Description=Dynamic ambassodor
+After=entry-etcd-amb.service
+BindsTo=entry-etcd-amb.service
+
+[Service]
+EnvironmentFile=/etc/environment
+EnvironmentFile=/home/core/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link entry-etcd-amb.service:etcd \
+  --name %n \
+  --rm \
+  -p ${COREOS_PRIVATE_IPV4}:${INTRA_PORT}:80 \
+  polvi/dynamic-etcd-amb \
+  intra/intra-rproxy 80
+# "intra/intra-rproxy" represents the entry point of intra
+ExecStop=/usr/bin/docker stop %n
+
+[X-Fleet]
+MachineOf=entry-etcd-amb.service

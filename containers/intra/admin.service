@@ -1,0 +1,16 @@
+[Unit]
+Description=Admin page
+After=docker.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull nginx
+ExecStart=/usr/bin/docker run \
+  -v /home/core/intra/admin:/usr/share/nginx/html:ro \
+  -p ${COREOS_PRIVATE_IPV4}::80 \
+  --name %n \
+  nginx
+ExecStop=/usr/bin/docker stop %n

@@ -4,11 +4,13 @@ After=docker.service
 
 [Service]
 TimeoutStartSec=0
-ExecStartPre=-/usr/bin/docker kill jp
-ExecStartPre=-/usr/bin/docker rm jp
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull nginx
 ExecStart=/usr/bin/docker run \
   -v /home/core/jp:/usr/share/nginx/html:ro \
-  --name jp \
+  -p ${COREOS_PRIVATE_IPV4}::80 \
+  --name %n \
   nginx
-ExecStop=/usr/bin/docker stop jp
+ExecStop=/usr/bin/docker stop %n

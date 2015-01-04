@@ -1,0 +1,17 @@
+[Unit]
+Description=Register
+After=jp-etcd-amb.service
+BindsTo=jp-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link jp-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  jp.service 80 jp
+
+[X-Fleet]
+MachineOf=jp-etcd-amb.service

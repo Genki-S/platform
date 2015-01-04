@@ -1,0 +1,17 @@
+[Unit]
+Description=Register
+After=blog-etcd-amb.service
+BindsTo=blog-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link blog-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  blog.service 80 blog
+
+[X-Fleet]
+MachineOf=blog-etcd-amb.service

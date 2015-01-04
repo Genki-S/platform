@@ -1,14 +1,16 @@
 [Unit]
-Description=Portfolio site
+Description=My Portfolio
 After=docker.service
 
 [Service]
 TimeoutStartSec=0
-ExecStartPre=-/usr/bin/docker kill portfolio
-ExecStartPre=-/usr/bin/docker rm portfolio
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull nginx
 ExecStart=/usr/bin/docker run \
   -v /home/core/portfolio:/usr/share/nginx/html:ro \
-  --name portfolio \
+  -p ${COREOS_PRIVATE_IPV4}::80 \
+  --name %n \
   nginx
-ExecStop=/usr/bin/docker stop portfolio
+ExecStop=/usr/bin/docker stop %n

@@ -1,6 +1,13 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 HOST_NAME"
+  exit 1
+fi
+
+host=$1
+
 root="$(dirname $0)/.."
 rsync -arv \
   --exclude-from "${HOME}/.gitignore_global" \
-  "${root}/containers/" genkisugimoto.com:/home/core
+  "${root}/containers/" ${host}:/home/core

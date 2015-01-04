@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 DROPLET_NAME"
+  exit 1
+fi
+
+name=$1
+
 root="$(dirname $0)/.."
 cloud_config=$(cat ${root}/cloud-config.yml \
   | sed "s/__SED_DISCOVERY_TOKEN__/${DISCOVERY_TOKEN}/")
@@ -7,7 +14,7 @@ cloud_config=$(cat ${root}/cloud-config.yml \
 data=$(cat << EOF
 {
   "ssh_keys": ["${SSH_KEY_ID}"],
-  "name": "genkisugimoto",
+  "name": "$name",
   "region": "nyc3",
   "size": "512mb",
   "private_networking": true,

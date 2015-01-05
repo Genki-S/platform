@@ -24,6 +24,12 @@ TODO
 - [Dynamic Docker links with an ambassador powered by etcd](https://coreos.com/blog/docker-dynamic-ambassador-powered-by-etcd/)
 - [How To Use the Ambassador Pattern to Dynamically Configure Services on CoreOS | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-ambassador-pattern-to-dynamically-configure-services-on-coreos)
 
+### General Service Discovery
+
+- [Understanding Modern Service Discovery with Docker :: Jeff Lindsay](http://progrium.com/blog/2014/07/29/understanding-modern-service-discovery-with-docker/)
+- [Consul Service Discovery with Docker :: Jeff Lindsay](http://progrium.com/blog/2014/08/20/consul-service-discovery-with-docker/)
+- [Automatic Docker Service Announcement with Registrator :: Jeff Lindsay](http://progrium.com/blog/2014/09/10/automatic-docker-service-announcement-with-registrator/)
+
 ### Troubleshooting
 
 - [How To Troubleshoot Common Issues with your CoreOS Servers | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-troubleshoot-common-issues-with-your-coreos-servers)

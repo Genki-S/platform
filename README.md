@@ -11,6 +11,8 @@
   - Fixed IP or Dynamic DNS?
 - Recovery strategy
   - [Dead container not restarted with Restart=always in Service · Issue #940 · coreos/fleet](https://github.com/coreos/fleet/issues/940)
+- `\*-docker-reg.service` files are redundant. Combine with [progrium/registrator](https://registry.hub.docker.com/u/progrium/registrator/)
+  - `\*-dynamic-amb.service` files might be also combined using [progrium/ambassadord](https://registry.hub.docker.com/u/progrium/ambassadord/)
 
 ## Architecture
 

@@ -1,0 +1,19 @@
+[Unit]
+Description=Register
+After=jpblog.service
+BindsTo=jpblog.service
+After=jpblog-etcd-amb.service
+BindsTo=jpblog-etcd-amb.service
+
+[Service]
+ExecStartPre=-/usr/bin/docker kill %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run \
+  --link jpblog-etcd-amb.service:etcd \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  --name %n \
+  --rm polvi/docker-register \
+  jpblog.service 80 jpblog
+
+[X-Fleet]
+MachineOf=jpblog.service

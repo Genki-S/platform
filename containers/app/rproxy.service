@@ -17,6 +17,7 @@ ExecStart=/usr/bin/docker run \
   -e "PORTFOLIO_PORT=${PORTFOLIO_PORT}" \
   -e "BLOG_PORT=${BLOG_PORT}" \
   -e "JP_PORT=${JP_PORT}" \
+  -e "JPBLOG_PORT=${JPBLOG_PORT}" \
   -v /home/core/app/rproxy/script:/script \
   -v /home/core/app/rproxy/conf.d:/etc/nginx/conf.d \
   -p ${COREOS_PRIVATE_IPV4}::80 \

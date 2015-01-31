@@ -23,7 +23,7 @@ server {
     location /jp/blog {
         rewrite ^/jp/blog$ / break;
         rewrite ^/jp/blog(/.*)$ $1 break;
-        proxy_pass SED_JP_URL;
+        proxy_pass SED_JPBLOG_URL;
     }
 
     error_page   500 502 503 504  /50x.html;

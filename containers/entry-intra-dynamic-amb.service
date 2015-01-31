@@ -4,6 +4,7 @@ After=entry-etcd-amb.service
 BindsTo=entry-etcd-amb.service
 
 [Service]
+Restart=always
 EnvironmentFile=/etc/environment
 EnvironmentFile=/home/core/environment
 ExecStartPre=-/usr/bin/docker kill %n

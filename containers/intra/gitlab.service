@@ -6,6 +6,7 @@ After=gitlab-support-postgresql.service
 
 [Service]
 TimeoutStartSec=0
+Restart=always
 EnvironmentFile=/etc/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n

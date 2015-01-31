@@ -6,6 +6,7 @@ After=jpblog-etcd-amb.service
 BindsTo=jpblog-etcd-amb.service
 
 [Service]
+Restart=always
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStart=/usr/bin/docker run \

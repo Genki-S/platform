@@ -4,6 +4,7 @@ After=intra-rproxy-etcd-amb.service
 BindsTo=intra-rproxy-etcd-amb.service
 
 [Service]
+Restart=always
 EnvironmentFile=/etc/environment
 EnvironmentFile=/home/core/environment
 ExecStartPre=-/usr/bin/docker kill %n

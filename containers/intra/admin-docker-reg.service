@@ -6,6 +6,7 @@ After=admin-etcd-amb.service
 BindsTo=admin-etcd-amb.service
 
 [Service]
+Restart=always
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStart=/usr/bin/docker run \

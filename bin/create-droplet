@@ -14,6 +14,9 @@ cloud_config=$(cat ${root}/cloud-config.yml \
   | sed "s/__SED_NAME__/${name}/" \
   | sed "s/__SED_SIZE__/${size}/")
 
+echo "cloud_config:"
+echo "$cloud_config"
+
 data=$(cat << EOF
 {
   "ssh_keys": ["${SSH_KEY_ID}"],

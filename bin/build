@@ -1,0 +1,8 @@
+#!/bin/bash
+
+root="$(dirname $0)/.."
+cd ./containers/app/portfolio
+npm install
+bower install
+gulp browserify
+gulp sass

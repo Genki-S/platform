@@ -5,6 +5,7 @@ After=docker.service
 [Service]
 TimeoutStartSec=0
 Restart=always
+RestartSec=3s
 EnvironmentFile=/etc/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n

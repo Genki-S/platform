@@ -14,6 +14,12 @@
 - `\*-docker-reg.service` files are redundant. Combine with [progrium/registrator](https://registry.hub.docker.com/u/progrium/registrator/)
   - `\*-dynamic-amb.service` files might be also combined using [progrium/ambassadord](https://registry.hub.docker.com/u/progrium/ambassadord/)
 
+## Known Issues
+
+- RestartSec is set to 3s because too frequent restart requests make systemd angry
+  - see: [systemd "start request repeated too quickly, refusing to start" kills "Restart=" functionality](http://lists.freedesktop.org/archives/systemd-devel/2011-June/002629.html)
+  - doc: [systemd.service](http://www.freedesktop.org/software/systemd/man/systemd.service.html)
+
 ## Architecture
 
 TODO

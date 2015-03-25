@@ -9,9 +9,10 @@ RestartSec=3s
 EnvironmentFile=/etc/environment
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
-ExecStartPre=/usr/bin/docker pull genki/wordpress
+ExecStartPre=/usr/bin/docker pull nginx
 ExecStart=/usr/bin/docker run \
+  -v /home/core/app/blog:/usr/share/nginx/html:ro \
   -p ${COREOS_PRIVATE_IPV4}::80 \
   --name %n \
-  genki/wordpress /start.sh
+  nginx
 ExecStop=/usr/bin/docker stop %n

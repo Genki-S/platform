@@ -1,8 +1,46 @@
 # Platform
 
+## Architecture
+
+- [Terraform](https://www.terraform.io/) to manage infrastructure
+- Ambassador pattern to realize service discovery
+
+## Operation
+
+1. Prepare variables
+  ```
+  $ cp terraform.example.tfvars terraform.tfvars
+  ```
+1. Use new discovery token
+  ```
+  $ ./bin/use-new-discovery-url
+  ```
+1. Prepare the infrastructure
+  ```
+  $ terraform plan
+  $ # Examine output carefully
+  $ terraform apply
+  ```
+1. Determine the IP address of entry point and set it as fleetctl tunnel
+  ```
+  $ terraform output entrypoint-ip
+  $ export FLEETCTL_TUNNEL=$(terraform output entrypoint-ip)
+  ```
+1. Load services
+  ```
+  $ fleetctl load containers/*.service containers/app/*.service
+  ```
+1. Start services
+  ```
+  $ fleetctl start containers/*.service containers/app/*.service
+  ```
+1. Deploy blog contents from wercker web app (TODO: automate this step)
+1. Access http://genkisugimoto.com and check all is OK
+
 ## Prerequisites
 
 - All files under `container` must reside on all hosts' `/home/core` directories
+- `blog` and `jpblog` services should run on `coreos-0` machine (because it will be deployed there)
 
 ## TODO
 
@@ -19,10 +57,6 @@
 - RestartSec is set to 3s because too frequent restart requests make systemd angry
   - see: [systemd "start request repeated too quickly, refusing to start" kills "Restart=" functionality](http://lists.freedesktop.org/archives/systemd-devel/2011-June/002629.html)
   - doc: [systemd.service](http://www.freedesktop.org/software/systemd/man/systemd.service.html)
-
-## Architecture
-
-TODO
 
 ## Resources
 

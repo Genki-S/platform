@@ -9,12 +9,22 @@ provider "cloudflare" {
   token = "${var.cloudflare_token}"
 }
 
-resource "cloudflare_record" "genkisugimoto" {
+resource "cloudflare_record" "www" {
   domain = "genkisugimoto.com"
-  name = "genkisugimoto"
+  name = "www"
   # Use coreos-0 as an entry point
-  value = "${digitalocean_droplet.coreos.0.id}"
+  value = "${digitalocean_droplet.coreos.0.ipv4_address}"
   type = "A"
+  ttl = 1
+}
+
+resource "cloudflare_record" "root" {
+  domain = "genkisugimoto.com"
+  name = "genkisugimoto.com"
+  # Use coreos-0 as an entry point
+  value = "www.genkisugimoto.com"
+  type = "CNAME"
+  ttl = 1
 }
 
 provider "digitalocean" {
@@ -27,6 +37,7 @@ resource "digitalocean_droplet" "coreos" {
   name = "coreos-${count.index}"
   region = "sgp1"
   size = "512mb"
+  private_networking = true
   # Run `tagboat keys` to find your key id
   ssh_keys = [496296]
   user_data = <<EOS
@@ -46,4 +57,40 @@ coreos:
     - name: fleet.service
       command: start
 EOS
+
+  provisioner "file" {
+    source = "containers/"
+    destination = "/home/core"
+    connection = {
+      user = "core"
+      key_file = "~/.ssh/id_rsa"
+    }
+  }
+
+  provisioner "file" {
+    source = "assets"
+    destination = "/home/core"
+    connection = {
+      user = "core"
+      key_file = "~/.ssh/id_rsa"
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /home/core",
+      "cat assets/jpblog-wercker-deploy-key >> .ssh/authorized_keys",
+      "chmod +x ./entry/script/start.sh",
+      "chmod +x ./app/rproxy/script/start.sh",
+      "chmod +x ./intra/intra-rproxy/script/start.sh"
+    ]
+    connection = {
+      user = "core"
+      key_file = "~/.ssh/id_rsa"
+    }
+  }
+}
+
+output "entrypoint-ip" {
+  value = "${digitalocean_droplet.coreos.0.ipv4_address}"
 }

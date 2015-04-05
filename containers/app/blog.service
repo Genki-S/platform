@@ -16,3 +16,7 @@ ExecStart=/usr/bin/docker run \
   --name %n \
   nginx
 ExecStop=/usr/bin/docker stop %n
+
+[X-Fleet]
+# Choose coreos-0, which is a deploy target of wercker-ci
+MachineMetadata=name=coreos-0

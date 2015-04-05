@@ -80,6 +80,7 @@ EOS
     inline = [
       "cd /home/core",
       "cat assets/jpblog-wercker-deploy-key >> .ssh/authorized_keys",
+      "cat assets/blog-wercker-deploy-key >> .ssh/authorized_keys",
       "chmod +x ./entry/script/start.sh",
       "chmod +x ./app/rproxy/script/start.sh",
       "chmod +x ./intra/intra-rproxy/script/start.sh"

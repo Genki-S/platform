@@ -7,4 +7,5 @@ root="$(dirname $0)/.."
 discovery_url=$(curl https://discovery.etcd.io/new)
 token=${discovery_url##*/}
 sed -i.bk -e "s/DISCOVERY_TOKEN=.*/DISCOVERY_TOKEN=${token}/" ${root}/.envrc
+sed -i.bk -e "s/discovery_token = .*/discovery_token = \"${token}\"/" ${root}/terraform.tfvars
 direnv allow

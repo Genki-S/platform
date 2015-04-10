@@ -3,6 +3,7 @@ variable "discovery_token" {}
 variable "digitalocean_token" {}
 variable "cloudflare_token" {}
 variable "cloudflare_email" {}
+variable "mackerel_apikey" {}
 
 provider "cloudflare" {
   email = "${var.cloudflare_email}"
@@ -76,6 +77,7 @@ EOS
     }
   }
 
+  # Preparations
   provisioner "remote-exec" {
     inline = [
       "cd /home/core",
@@ -84,6 +86,22 @@ EOS
       "chmod +x ./entry/script/start.sh",
       "chmod +x ./app/rproxy/script/start.sh",
       "chmod +x ./intra/intra-rproxy/script/start.sh"
+    ]
+    connection = {
+      user = "core"
+      key_file = "~/.ssh/id_rsa"
+    }
+  }
+
+  # Install and run Mackerel
+  provisioner "remote-exec" {
+    inline = [
+      "curl -O http://file.mackerel.io/agent/tgz/mackerel-agent-latest.tar.gz",
+      "tar xzf mackerel-agent-latest.tar.gz",
+      "sudo mkdir /etc/mackerel-agent",
+      "echo 'apikey = \"${var.mackerel_apikey}\"' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf"
+      # https://gist.github.com/kotaro-dev/b2c81b6e9775dc1e0256
+      "nohup sudo systemd-run ./mackerel-agent/mackerel-agent &"
     ]
     connection = {
       user = "core"

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+name="docker.containers.count.running"
+monitor_time=`date +%s`
+count=`docker ps | grep -v '^CONTAINER ID' | wc -l`
+echo -e "${name}\t${count}\t${monitor_time}"

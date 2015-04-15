@@ -100,6 +100,9 @@ EOS
       "tar xzf mackerel-agent-latest.tar.gz",
       "sudo mkdir /etc/mackerel-agent",
       "echo 'apikey = \"${var.mackerel_apikey}\"' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf",
+      "echo '[plugin.metrics.docker]' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf",
+      "echo 'command = \"/home/core/assets/mackerel-metrics-docker-containers-count-running\"' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf",
+      "chmod +x /home/core/assets/mackerel-metrics-docker-containers-count-running",
       # https://gist.github.com/kotaro-dev/b2c81b6e9775dc1e0256
       "nohup sudo systemd-run ./mackerel-agent/mackerel-agent &"
     ]

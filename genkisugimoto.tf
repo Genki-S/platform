@@ -99,7 +99,7 @@ EOS
       "curl -O http://file.mackerel.io/agent/tgz/mackerel-agent-latest.tar.gz",
       "tar xzf mackerel-agent-latest.tar.gz",
       "sudo mkdir /etc/mackerel-agent",
-      "echo 'apikey = \"${var.mackerel_apikey}\"' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf"
+      "echo 'apikey = \"${var.mackerel_apikey}\"' | sudo tee --append /etc/mackerel-agent/mackerel-agent.conf",
       # https://gist.github.com/kotaro-dev/b2c81b6e9775dc1e0256
       "nohup sudo systemd-run ./mackerel-agent/mackerel-agent &"
     ]

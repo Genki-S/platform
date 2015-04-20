@@ -7,7 +7,7 @@ BindsTo=portfolio-etcd-amb.service
 
 [Service]
 Restart=always
-RestartSec=3s
+RestartSec=10m
 ExecStartPre=-/usr/bin/docker kill %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStart=/usr/bin/docker run \
